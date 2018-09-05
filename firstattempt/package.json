@@ -1,0 +1,12 @@
+{
+    "name": "deepthought-bot",
+    "version": "1.0.0",
+    "description": "Deep Thought bot for Discord",
+    "main": "bot.js",
+    "author": "Richard Sims",
+    "dependencies": {
+        "discord.io": "https://github.com/woor/discord.io/tarball/gateway_v6",
+        "request": "^2.88.0",
+        "winston": "^3.0.0"
+    }
+}

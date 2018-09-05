@@ -1,0 +1,24 @@
+{
+  "name": "deepthought",
+  "version": "1.0.0",
+  "description": "A Discord bot test",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/monkiepaws/deepthought.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/monkiepaws/deepthought/issues"
+  },
+  "homepage": "https://github.com/monkiepaws/deepthought#readme",
+  "dependencies": {
+    "discord.js": "^11.4.2",
+    "eslint": "^5.5.0"
+  }
+}
