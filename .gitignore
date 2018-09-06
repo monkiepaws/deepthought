@@ -1,6 +1,7 @@
 # Secret
 auth.json
 auth.js
+config.json
 
 # Logs
 logs
