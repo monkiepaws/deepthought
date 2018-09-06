@@ -3,7 +3,7 @@ module.exports = {
     description: "Prune messages!",
     args: true,
     usage: "[amount]",
-    execution(message, args) {
+    execute(message, args) {
         const amount = args[0];
 
         if (isNaN(amount)) {
