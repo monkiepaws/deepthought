@@ -27,7 +27,7 @@ client.on("message", message => {
     }
 
     // Split message of all spaces
-    const args = message.content.slice(prefix.length).split(/ +/);
+    const args = message.content.toLowerCase().slice(prefix.length).split(/ +/);
     // Remove first word from the message as the command
     const commandName = args.shift().toLowerCase();
 
