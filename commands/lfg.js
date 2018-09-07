@@ -4,6 +4,8 @@
 // 3. Don't overwrite platform if you update?
 // 4. Add SF5 Alias
 // 5. Add SF4 Alias
+// 6. Add FC/30th platforms for ST/3S OR
+// 7. Add Fightcade as a Game
 
 const description = "Let people know which games you are available for!\n" +
                     "**Games**\n" +
