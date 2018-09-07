@@ -1,3 +1,10 @@
+// TODO:
+// 1. Alias for Tekken as "t7"
+// 2. Add SC6 Game
+// 3. Don't overwrite platform if you update?
+// 4. Add SF5 Alias
+// 5. Add SF4 Alias
+
 const description = "Let people know which games you are available for!\n" +
                     "**Games**\n" +
                     "sfv        Street Fighter V\n" +
