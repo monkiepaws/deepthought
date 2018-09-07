@@ -1,3 +1,5 @@
+const { polyDiscordID } = require("../config.json");
+
 module.exports = {
     name: "prune",
     description: "Prune messages!",
@@ -13,6 +15,10 @@ module.exports = {
             return message.reply("you can prune the last 2 to 100 messages.");
         }
 
-        message.channel.bulkDelete(amount);
+        if (message.author.id === polyDiscordID) {
+            message.channel.bulkDelete(amount);
+        }
+        
+        return;
     }
 };

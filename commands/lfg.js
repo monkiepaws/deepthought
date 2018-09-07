@@ -18,6 +18,7 @@ const validPlatforms = ["pc", "ps4"];
 const defaultPlatform = "pc";
 const gameList = ["all", "sfv", "st", "3s", "usf4", "dbz", "gg", "unist", "mhw", "tekken", "mvci"];
 const allGames = gameList[0];
+const MAX_HOURS = 24;
 
 const lfgList = [];
 
@@ -26,6 +27,7 @@ module.exports = {
     usage: "[name of game] [hours] [optional: platform]",
     aliases: ["game", "games", "waiting", "available"],
     description: description,
+    cooldown: 2,
     execute(message, args) {
         // !lfg
         // Without arguments, we show the current list of users waiting for games
@@ -68,6 +70,9 @@ module.exports = {
         removeDuplicateLFG(message.author.id, game);
 
         // Everything seems OK, ready to add user to the waiting list
+        if (args[1] > MAX_HOURS) {
+            args[1] = MAX_HOURS;
+        }
         const availableTime = args[1] * 1000 * 60 * 60;
         const availableUntil = Date.now() + availableTime; 
 
