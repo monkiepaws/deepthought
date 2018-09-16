@@ -25,7 +25,7 @@ const description = "Let people know which games you are available for!\n" +
                     "**!lfg dbz 2 ps4**\n";
 const validPlatforms = ["pc", "ps4"];
 const defaultPlatform = "pc";
-const gameList = ["all", "sfv", "st", "3s", "usf4", "dbz", "gg", "unist", "mhw", "tekken", "mvci"];
+const gameList = ["all", "sfv", "st", "3s", "usf4", "dbz", "gg", "unist", "mhw", "tekken", "sc6", "mvci"];
 const allGames = gameList[0];
 const MAX_HOURS = 24;
 
@@ -49,7 +49,8 @@ module.exports = {
         if (args[0] === "stop") {
             if (removeFromListByID(message.author.id) === true) {
                 message.channel.send(`${message.author}, if you were on the waiting list, I've removed you!`);
-            } else {
+            }
+            else {
                 message.channel.send(`${message.author}, I don't think you were on the waiting list!`);
             }
 
@@ -70,7 +71,8 @@ module.exports = {
             if (isValidGame === true) {
                 showList(message, game);
                 return;
-            } else {
+            }
+            else {
                 return message.channel.send(`${message.author}, I didn't understand what you wanted. Try !lfg [name of game] [hours]`);
             }
         }
@@ -83,7 +85,7 @@ module.exports = {
             args[1] = MAX_HOURS;
         }
         const availableTime = args[1] * 1000 * 60 * 60;
-        const availableUntil = Date.now() + availableTime; 
+        const availableUntil = Date.now() + availableTime;
 
         const platform = isValidPlatform(args[2]) ? args[2] : defaultPlatform;
 
@@ -92,13 +94,13 @@ module.exports = {
             username: message.author.username,
             game: game,
             platform: platform,
-            endTime: availableUntil
-        }
+            endTime: availableUntil,
+        };
 
         lfgList.push(newLFG);
         message.channel.send(`${message.author}, added you to the ${newLFG.game.toUpperCase()} waiting list!`);
         return;
-    }
+    },
 };
 
 const showList = (message, game = allGames) => {
@@ -108,16 +110,15 @@ const showList = (message, game = allGames) => {
     if (!lfgList.length) {
         listMessage += "No users waiting for games, at the moment! Don't forget to add yourself, post **!help lfg** to see how!";
     }
-    
+
     for (let i = 0; i < lfgList.length; i++) {
         if (removeExpiredLFG(i) === true) {
             i--;
-        } else {
-            if (game === lfgList[i].game || game === allGames) {
-                lfgListCounter++;
-                listMessage += createListText(i, lfgListCounter);
-            }
-        }       
+        }
+        else if (game === lfgList[i].game || game === allGames) {
+            lfgListCounter++;
+            listMessage += createListText(i, lfgListCounter);
+        }
     }
     console.log(lfgList);
 
@@ -144,9 +145,10 @@ const createListText = (i, count) => {
 
     if (endTime < 60) {
         return `**${count}. ${username}:** waiting for **${game}** on **${platform}** for ${Math.floor(endTime)} more minutes.\n`;
-    } else {
+    }
+    else {
         endTime /= 60;
-        return `**${count}. ${username}:** waiting for **${game}** on **${platform}** for ${Math.floor(endTime)} more hours.\n`
+        return `**${count}. ${username}:** waiting for **${game}** on **${platform}** for ${Math.floor(endTime)} more hours.\n`;
     }
 };
 
@@ -164,7 +166,7 @@ const removeFromListByID = id => {
     }
 
     return didRemoveLFG;
-}
+};
 
 const containsUserGame = userGame => gameList.some(game => userGame === game);
 
