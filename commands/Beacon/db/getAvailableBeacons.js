@@ -1,5 +1,4 @@
 const sql = require('mssql');
-const getConnection = require('./getConnection.js');
 module.exports = getAvailableBeacons;
 
 async function getAvailableBeacons() {
