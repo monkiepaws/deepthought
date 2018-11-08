@@ -6,7 +6,7 @@ module.exports = class Beacon {
         this._db = new BeaconDb();
     }
 
-    async showList() {
+    async getList() {
         let result;
         try {
             result = await this._db.getAvailableBeacons();
@@ -34,7 +34,7 @@ module.exports = class Beacon {
         } catch (err) {
             console.log(err);
         }
-        return result.rowsAffected.every(value => value > 0);
+        return result;
     }
 
     async removeFromListByID(userId) {

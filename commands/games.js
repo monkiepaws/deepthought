@@ -46,10 +46,7 @@ module.exports = {
         // !lfg
         // Without arguments, we show the current list of users waiting for games
         if (args.length === 0) {
-            beacon.showList()
-                  .then(list => message.channel.send(list))
-                  .catch(err => console.log(err));
-            return;
+            return showList(message);
         }
 
         if (args[0] === "list") {
@@ -58,29 +55,20 @@ module.exports = {
 
         // If the first argument is stop - delete user from the waiting list
         if (args[0] === "stop") {
-            beacon.removeFromListByID(message.author.id.toString())
-                .then(success => {
-                    if (success) {
-                        return message.channel.send(`${message.author}, if you were on the waiting list, I've removed you!`);
-                    } else {
-                        return message.channel.send(`${message.author}, I don't think you were on the waiting list!`);
-                    }
-                }).catch(err => {
-                    console.log(err);
-            });
-            return;
+            return removeFromList(message);
         }
 
         const game = aliases.has(args[0]) ? aliases.get(args[0]).game : null;
-        if (!game) return message.channel.send(`${message.author}, you haven't provided a valid game or sub-command. Type **wp!help games** for more info.`);
+        if (!game) {
+            return message.channel.send(`${message.author}, ` +
+            `you haven't provided a valid game or sub-command. Type **wp!help games** for more info.`);
+        }
+        const title = games.get(game).title;
 
         // If the second argument is NaN:
         //   User wants a list specific for the game requested
         if (isNaN(args[1])) {
-            beacon.showListOfGame(game, games.get(game).title)
-                  .then(list => message.channel.send(list))
-                  .catch(err => console.log(err));
-            return;
+            return showListOfGame(game, title, message);
         }
 
         const time = args[1] < MAX_HOURS ? args[1] : MAX_HOURS;
@@ -97,18 +85,51 @@ module.exports = {
             minutesAvailable: minutesAvailable,
         };
 
-        beacon.addBeacon(newBeacon)
-            .then(success => {
-                if (success) {
-                    return message.channel.send(`${message.author}, added you to the ${newBeacon.gameName.toUpperCase()} waiting list!`);
-                } else {
-                    return message.channel.send(`${message.author}, something went wrong and you weren't added to a waiting list!`);
-                }
-            }).catch(err => {
-                console.log(err);
-        })
+        return addToList(newBeacon, message);
     },
 };
+
+function showList(message) {
+    return beacon.getList()
+        .then(list => message.channel.send(list))
+        .catch(err => console.log(err));
+}
+
+function showListOfGame(game, title, message) {
+    return beacon.showListOfGame(game, title)
+        .then(list => message.channel.send(list))
+        .catch(err => console.log(err));
+}
+
+function removeFromList(message) {
+    return beacon.removeFromListByID(message.author.id.toString())
+        .then(success => {
+            if (success) {
+                return message.channel.send(`${message.author}, if you were on the waiting list, I've removed you!`);
+            } else {
+                return message.channel.send(`${message.author}, I don't think you were on the waiting list!  🤔`);
+            }
+        })
+        .catch(err => console.log(err));
+}
+
+function addToList(newBeacon, message) {
+    return beacon.addBeacon(newBeacon)
+        .then(result => messageOnAddBeacon(newBeacon.gameName, result, message))
+        .catch(err => console.log(err));
+}
+
+function messageOnAddBeacon(game, result, message) {
+    if (result.rowsAffected.every(value => value > 0)) {
+        let success = `${message.author}, added you to the ${game.toUpperCase()} waiting list!\n**Here comes a new rival!**\t`;
+        result.recordset.map(beacon => {
+            success += `<@${beacon.UserId}>\t`;
+        });
+        return message.channel.send(success);
+    } else {
+        return message.channel.send(`${message.author}, something went wrong and you weren't added to a waiting list!`);
+    }
+}
 
 function embeddedGamesList() {
     const fields = [];
