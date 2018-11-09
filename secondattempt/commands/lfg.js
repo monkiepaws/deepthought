@@ -1,11 +1,5 @@
 // TODO:
-// 1. Alias for Tekken as "t7"
-// 2. Add SC6 Game
-// 3. Don't overwrite platform if you update?
-// 4. Add SF5 Alias
-// 5. Add SF4 Alias
-// 6. Add FC/30th platforms for ST/3S OR
-// 7. Add Fightcade as a Game
+// 1. Don't overwrite platform if you update?
 
 const description = "Let people know which games you are available for!\n" +
                     "**Games**\n" +
@@ -48,13 +42,11 @@ module.exports = {
         // If the first argument is stop - delete user from the waiting list
         if (args[0] === "stop") {
             if (removeFromListByID(message.author.id) === true) {
-                message.channel.send(`${message.author}, if you were on the waiting list, I've removed you!`);
+                return message.channel.send(`${message.author}, if you were on the waiting list, I've removed you!`);
             }
             else {
-                message.channel.send(`${message.author}, I don't think you were on the waiting list!`);
+                return message.channel.send(`${message.author}, I don't think you were on the waiting list!`);
             }
-
-            return;
         }
 
         const game = args[0];
@@ -98,8 +90,7 @@ module.exports = {
         };
 
         lfgList.push(newLFG);
-        message.channel.send(`${message.author}, added you to the ${newLFG.game.toUpperCase()} waiting list!`);
-        return;
+        return message.channel.send(`${message.author}, added you to the ${newLFG.game.toUpperCase()} waiting list!`);
     },
 };
 
@@ -122,9 +113,7 @@ const showList = (message, game = allGames) => {
     }
     console.log(lfgList);
 
-    message.channel.send(listMessage);
-
-    return;
+    return message.channel.send(listMessage);
 };
 
 const removeExpiredLFG = i => {
@@ -181,6 +170,4 @@ const removeDuplicateLFG = (id, game) => {
             }
         }
     }
-
-    return;
 };

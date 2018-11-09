@@ -2,6 +2,10 @@
 auth.json
 auth.js
 config.json
+*secrets.js
+
+# Webstorm
+.idea/
 
 # Logs
 logs
