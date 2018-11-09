@@ -125,6 +125,12 @@
     },
     "infinite": {
       "game": "mvci"
+    },
+    "kof14": {
+      "game": "kof14"
+    },
+    "kof": {
+      "game": "kof14"
     }
   }
 }
