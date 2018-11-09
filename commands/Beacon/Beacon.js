@@ -51,21 +51,28 @@ module.exports = class Beacon {
 
     messageList(listType, result) {
         if (result.rowsAffected.every(value => value === 0)) {
-            return `No one is waiting for ${listType.toUpperCase()}, yet!\nDon't forget to add yourself to the waiting list. Check out wp!games help`;
+            return `No one is waiting for ${listType.toUpperCase()}, yet!\nDon't forget to add yourself to the waiting list. Check out **!helpme games**`;
         }
 
         const title = listType === allGames ? 'All Available' : `All ${listType}`;
-        let list = `**WP Looking For Games**\n__${title} Beacons__\n\n`;
+        let list = `WP Looking For Games\n${title} Beacons\n\n`;
         const date = new Date();
 
         result.recordset.map((beacon, index) => {
             const { Username, GameName, PlatformName, EndTime } = beacon;
-            const platform = PlatformName === 'pc' ? `` : `\t(${PlatformName.toUpperCase()})`;
+            const platform = PlatformName === 'pc'? '' : `\t(${PlatformName.toUpperCase()})`;
             const available = (EndTime - date.getTime()) / 60000;
-            const time = available < 60 ? available : available / 60;
-            const handle = available < 60 ? `minutes` : `hours`;
-            list += `**${Username}**\tfor ${Math.round(time)} ${handle}\t***${GameName.toUpperCase()}***${platform}\n`
+            const hours = Math.floor(available / 60);
+            const minutes = Math.floor(available % 60);
+            const showHours = hours > 0 ? ` ${hours}` : ' ';
+
+            list += `🏮`;
+            list += `${GameName.toUpperCase()}`.padEnd(7);
+            list += `${Username}`.padEnd(18);
+            list += showHours === ' ' ? ''.padEnd(9) : `${showHours}${hours === 1 ? ` hour  ` : ` hours `}`.padEnd(8);
+            list += `${minutes}${minutes === 1 ? ' min' : ' mins'}`.padEnd(7);
+            list += `${platform}\n`.padStart(8);
         });
-        return list;
+        return '`' + list + '`';
     }
 };

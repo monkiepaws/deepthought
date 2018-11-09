@@ -1,13 +1,6 @@
 // TODO:
-// 1. Don't overwrite platform if you update? < done
-// 2. Special case for SFV where doesn't show platform
-// 3. Add by-platform list
-// 4. Hours AND Minutes
-// 5. Order lists by Platform > Game > Time
-// 6. Ping everyone on game list when another is added < done
-//      6.a Mention user once
-//      6.b Game specific messages
-// 7. Justify List text with magic algorithm
+// 3. Add by-platform list ~~ I'm observing performance of ordering all lists as:
+//                  Platform > Game > Time available
 
 const Beacon = require('./Beacon/Beacon.js');
 function initGames() {
@@ -30,19 +23,19 @@ const description = "Let people know which games you are available for!\n" +
     "friendly **WP Looking For Games** service to send out a beacon!\n\n" +
     "__Example:__ Harry is available to play SSF2 Super Turbo on PS4 for the next " +
     "2.5 hours:\n" +
-    "**wp!games\tst\t2.5\tps4**\n" +
+    "**!games\tst\t2.5\tps4**\n" +
     "...sends out a beacon. *Easy!*\n\n" +
     "__Take yourself off the list:__\n" +
-    "**wp!games\tstop**\n\n" +
+    "**!games\tstop**\n\n" +
     "__Parameters:__\n" +
-    "**[game name]:**\ttype\t**wp!games\tlist**\tfor a list of valid games.\n" +
+    "**[game name]:**\ttype\t**!games\tlist**\tfor a list of valid games.\n" +
     "**[hours]:**\tMin: 0.25 (15 mins) / Max: 24\n" +
-    "**[platform]:**\tOptional. Defaults to PC. Type\t**wp!games\tlist**\tfor valid platforms\n";
+    "**[platform]:**\tOptional. Defaults to PC. Type\t**!games\tlist**\tfor valid platforms\n";
 
 module.exports = {
     name: "games",
     usage: "[game name] [hours] [optional: platform]",
-    aliases: ["lfg"],
+    aliases: ["g", "lfg"],
     description: description,
     cooldown: 2,
     execute(message, args) {
@@ -62,10 +55,11 @@ module.exports = {
             return removeFromList(message);
         }
 
+        // Check if the game is valid through the aliases Map
         const game = aliases.has(args[0]) ? aliases.get(args[0]).game : null;
         if (!game) {
             return message.channel.send(`${message.author}, ` +
-            `you haven't provided a valid game or sub-command. Type **wp!help games** for more info.`);
+            `you haven't provided a valid game or sub-command. Type **!helpme games** for more info.`);
         }
         const title = games.get(game).title;
 
@@ -75,10 +69,15 @@ module.exports = {
             return showListOfGame(game, title, message);
         }
 
+        // Check that the time available is valid
         const time = args[1] < MAX_HOURS ? args[1] : MAX_HOURS;
         const minutesAvailable = time > MIN_HOURS ? time * 60 : MIN_HOURS * 60;
 
-        const platform = games.get(game).platforms.includes(args[2]) ? args[2] : games.get(game).defaultPlatform;
+        // Check that the platform is valid for this particular game in the games Map
+        const platform = games.get(game).platforms.includes(args[2]) && game !== 'sfv' ?
+            args[2]
+            :
+            games.get(game).defaultPlatform;
 
         // Everything seems OK, ready to add user's beacon to the waiting list
         const newBeacon = {
@@ -119,16 +118,23 @@ function removeFromList(message) {
 
 function addToList(newBeacon, message) {
     return beacon.addBeacon(newBeacon)
-        .then(result => messageOnAddBeacon(newBeacon.gameName, result, message))
+        .then(result => messageOnAddBeacon(newBeacon, result, message))
         .catch(err => console.log(err));
 }
 
-function messageOnAddBeacon(game, result, message) {
-    if (result.rowsAffected.every(value => value > 0)) {
-        let success = `${message.author}, added you to the ${game.toUpperCase()} waiting list!\n**Here comes a new rival!**\t`;
-        result.recordset.map(beacon => {
-            success += `<@${beacon.UserId}>\t`;
+function messageOnAddBeacon(newBeacon, result, message) {
+    if (result.rowsAffected.find(value => value > 0)) {
+        const game = newBeacon.gameName;
+        const platform = newBeacon.platformName;
+        const gameMessage = games.get(game).message;
+        let success = '';
+        result.recordset.map(currentBeacon => {
+            if (currentBeacon.UserId !== message.author.id && currentBeacon.PlatformName === platform) {
+                success += `<@${currentBeacon.UserId}>\t`;
+            }
         });
+        success += `${gameMessage}\n`;
+        success += `${message.author} added you to the ${game.toUpperCase()} ${platform === 'pc' ? '' : platform.toUpperCase()} waiting list!`;
         return message.channel.send(success);
     } else {
         return message.channel.send(`${message.author}, something went wrong and you weren't added to a waiting list!`);

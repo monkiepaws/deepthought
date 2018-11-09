@@ -19,6 +19,6 @@
   "homepage": "https://github.com/monkiepaws/deepthought#readme",
   "dependencies": {
     "discord.js": "^11.4.2",
-    "mssql": "^4.2.2"
+    "mssql": "^4.2.3"
   }
 }
