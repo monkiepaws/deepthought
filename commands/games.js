@@ -1,10 +1,13 @@
 // TODO:
-// 1. Don't overwrite platform if you update?
+// 1. Don't overwrite platform if you update? < done
 // 2. Special case for SFV where doesn't show platform
 // 3. Add by-platform list
 // 4. Hours AND Minutes
 // 5. Order lists by Platform > Game > Time
-// 6. Ping everyone on game list when another is added
+// 6. Ping everyone on game list when another is added < done
+//      6.a Mention user once
+//      6.b Game specific messages
+// 7. Justify List text with magic algorithm
 
 const Beacon = require('./Beacon/Beacon.js');
 function initGames() {
@@ -49,6 +52,7 @@ module.exports = {
             return showList(message);
         }
 
+        // This is the call for the list of games the bot accepts
         if (args[0] === "list") {
             return message.author.send({ embed: gamesList });
         }

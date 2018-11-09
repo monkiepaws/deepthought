@@ -1,3 +1,5 @@
+// This class is the middle man between the bot and the data
+// access layer (in this case, BeaconDb)
 const BeaconDb = require('./db/BeaconDb.js');
 const allGames = 'all';
 

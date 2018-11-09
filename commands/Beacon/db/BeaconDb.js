@@ -1,10 +1,9 @@
+// BeaconDb uses the node-mssql module to communicate
+// with this bot's database, and sends back to the caller,
+// which in this case is the Beacon class.
+
 const sql = require('mssql');
 const secrets = require('./secrets.js');
-const getAvailableBeacons = require('./getAvailableBeacons.js');
-const getBeaconsByGame = require('./getBeaconsByGame.js');
-const sendBeacon = require('./sendBeacon.js');
-const stopBeaconsByUser = require('./stopBeaconsByUser.js');
-const stopBeaconByUserAndGame = require('./stopBeaconByUserAndGame.js');
 
 module.exports = class BeaconDb {
     constructor() {
