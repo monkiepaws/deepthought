@@ -47,7 +47,8 @@ module.exports = {
 
         // This is the call for the list of games the bot accepts
         if (args[0] === "list") {
-            return message.author.send({ embed: gamesList });
+            return message.author.send({ embed: gamesList })
+                .catch(error => console.log(error));
         }
 
         // If the first argument is stop - delete user from the waiting list
@@ -59,7 +60,8 @@ module.exports = {
         const game = aliases.has(args[0]) ? aliases.get(args[0]).game : null;
         if (!game) {
             return message.channel.send(`${message.author}, ` +
-            `you haven't provided a valid game or sub-command. Type **!helpme games** for more info.`);
+            `you haven't provided a valid game or sub-command. Type **!helpme games** for more info.`)
+                .catch(error => console.log(error));
         }
         const title = games.get(game).title;
 
