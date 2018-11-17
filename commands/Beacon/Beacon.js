@@ -68,7 +68,7 @@ module.exports = class Beacon {
 
             list += `🏮`;
             list += `${GameName.toUpperCase()}`.padEnd(7);
-            list += `${Username}`.padEnd(18);
+            list += `${Username}`.padEnd(18).slice(0, 18);
             list += showHours === ' ' ? ''.padEnd(9) : `${showHours}${hours === 1 ? ` hour  ` : ` hours `}`.padEnd(8);
             list += `${minutes}${minutes === 1 ? ' min' : ' mins'}`.padEnd(7);
             list += `${platform}\n`.padStart(8);
