@@ -19,7 +19,13 @@ client.on("ready", () => {
     console.log("Ready!");
 });
 
-client.login(token).then(response => console.log(response));
+client.login(token)
+    .then(response => {
+        if (response !== token) {
+            throw new Error('Couldn\'t login to discord, or response token is differs to sent token.');
+        }
+    })
+    .catch(err => console.error(err));
 
 client.on("message", message => {
     // If the message meets one of these three conditions, do nothing :
