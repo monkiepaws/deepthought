@@ -36,7 +36,7 @@ Command | Title | Platforms
 ## Feedback, issues
 If you really love me, you'll signup to GitHub and use the `Issues` tab to post any problems you've encountered! Not just bugs 🐞 though, submit any new features you'd like as well!
 
-Why? Cause GitHub is pretty neat! Also, I'm a student; using GitHub helps my studies and hopefully future working prespects 🤓
+Why? Cause GitHub is pretty neat! Also, I'm a student; using GitHub helps my studies and (hopefully) future working prospects 🤓
 
 ## Contributing
 There will be a lot of you that are better at programming that I am, so if you'd like to contribute to fixing an issue or feature, let me know in that particular issue in the tracker.
