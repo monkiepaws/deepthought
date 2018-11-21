@@ -22,7 +22,11 @@ client.on("ready", () => {
 client.login(token);
 
 client.on("message", message => {
-    if (message.content.startsWith(prefix) === false || message.author.bot === true) {
+    // If the message meets one of these three conditions, do nothing :
+    // 1. Message doesn't start with the prefix
+    // 2. The Message author is a bot
+    // 3. The Message was sent through a DM
+    if (message.content.startsWith(prefix) === false || message.author.bot === true || message.channel.type === 'dm') {
         return;
     }
 
