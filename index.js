@@ -19,7 +19,7 @@ client.on("ready", () => {
     console.log("Ready!");
 });
 
-client.login(token);
+client.login(token).then(response => console.log(response));
 
 client.on("message", message => {
     // If the message meets one of these three conditions, do nothing :
