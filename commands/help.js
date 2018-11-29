@@ -14,7 +14,7 @@ module.exports = {
             data.push("Here's a list of all my commands:");
             data.push(commands.map(command => command.name).join(', '));
             data.push(`\nYou can send \`${prefix}helpme [command name]\` to get info on a specific command!\n`);
-            data.push('\nPlease let me know of any bugs, ideas and feedback: https://github.com/monkiepaws/polybot');
+            data.push('Please let me know of any bugs, ideas and feedback: https://github.com/monkiepaws/polybot');
 
             return message.author.send(data, { split: true })
                 .then(() => {
@@ -42,6 +42,6 @@ module.exports = {
 
         data.push(`**Cooldown:** ${command.cooldown || 3} second(s)`);
 
-        message.author.send(data, { split: true });
+        message.author.send(data, { split: true }).catch(error => console.error(error));
     } 
 };
