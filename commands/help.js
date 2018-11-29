@@ -13,7 +13,8 @@ module.exports = {
         if (!args.length) {
             data.push("Here's a list of all my commands:");
             data.push(commands.map(command => command.name).join(', '));
-            data.push(`\nYou can send \`${prefix}helpme [command name]\` to get info on a specific command!`);
+            data.push(`\nYou can send \`${prefix}helpme [command name]\` to get info on a specific command!\n`);
+            data.push('\nPlease let me know of any bugs, ideas and feedback: https://github.com/monkiepaws/polybot');
 
             return message.author.send(data, { split: true })
                 .then(() => {
