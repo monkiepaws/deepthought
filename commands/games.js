@@ -17,20 +17,16 @@ const gamesList = embeddedGamesList();
 const beacon = new Beacon();
 const MIN_HOURS = 0.25;
 const MAX_HOURS = 24;
-const description = "Let people know which games you are available for!\n" +
-    "Say you've come home from work or school and want to play some SFV, but " +
-    "don't want to watch the match making channel all night? Just use your " +
-    "friendly **WP Looking For Games** service to send out a beacon!\n\n";
-    // "__Example:__ Harry is available to play SSF2 Super Turbo on PS4 for the next " +
-    // "2.5 hours:\n" +
-    // "**!games\tst\t2.5\tps4**\n" +
-    // "...sends out a beacon. *Easy!*\n\n" +
-    // "__Take yourself off the list:__\n" +
-    // "**!games\tstop**\n\n" +
-    // "__Parameters:__\n" +
-    // "**[game name]:**\ttype\t**!games\tlist**\tfor a list of valid games.\n" +
-    // "**[hours]:**\tMin: 0.25 (15 mins) / Max: 24\n" +
-    // "**[platform]:**\tOptional. Defaults to PC. Type\t**!games\tlist**\tfor valid platforms\n";
+const description = "Let people know which games you are available for!\n\n" +
+    "__Example:__ Harry is available to play SSF2 Super Turbo on PS4 for the next " +
+    "2.5 hours:\n" +
+    "`!games st 2.5 ps4` ...sends out a beacon. *Easy!*\n\n" +
+    "__Take yourself off the list:__\n" +
+    "`!games stop`\n\n" +
+    "__Parameters:__\n" +
+    "`[game name]:`\ttype\t`!games list`\tfor a list of valid games.\n" +
+    "`[hours]:`\tMin: 0.25 (15 mins) / Max: 24\n" +
+    "`[platform]:`\tOptional. Defaults to PC. Type\t`!games list`\tfor valid platforms\n";
 
 module.exports = {
     name: "games",
