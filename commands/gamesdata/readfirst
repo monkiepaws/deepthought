@@ -13,7 +13,9 @@ Thank you, friends, for helping me test out this little looking-for-games bot I 
 
 5. Remove yourself from the list: Post: **!games stop**
 
-Spam as much as you want, cooldowns exist just in case.
 !lfg / !games all do the same thing. Use whatever you like.
 Post or DM the bot with **!games list**  for a list of games the bot accepts.
 **!helpme games** gives a deeper how-to.
+
+Bugs, feedback, ideas - all appreciated!
+https://github.com/monkiepaws/polybot

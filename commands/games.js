@@ -30,7 +30,8 @@ const description = "Let people know which games you are available for!\n" +
     "__Parameters:__\n" +
     "**[game name]:**\ttype\t**!games\tlist**\tfor a list of valid games.\n" +
     "**[hours]:**\tMin: 0.25 (15 mins) / Max: 24\n" +
-    "**[platform]:**\tOptional. Defaults to PC. Type\t**!games\tlist**\tfor valid platforms\n";
+    "**[platform]:**\tOptional. Defaults to PC. Type\t**!games\tlist**\tfor valid platforms\n" +
+    "Bugs, ideas and feedback: https://github.com/monkiepaws/polybot";
 
 module.exports = {
     name: "games",
