@@ -42,6 +42,6 @@ module.exports = {
 
         data.push(`**Cooldown:** ${command.cooldown || 3} second(s)`);
 
-        message.author.send(data, { split: true }).catch(error => console.error(error));
+        return message.author.send(data, { split: true }).catch(error => console.error(error));
     } 
 };
