@@ -7,12 +7,12 @@ module.exports = class Store {
         const guildId = message.guild.id;
         const response = {
             added: [],
-            exists: []
+            existing: []
         };
         try {
             roles.map(role => {
                 if (this._store.find(element => element.guildId === guildId && element.roleId === role.id)) {
-                    return response.exists.push(role.name);
+                    return response.existing.push(role.name);
                 } else {
                     this._store.push({
                         guildId: guildId,
@@ -20,6 +20,26 @@ module.exports = class Store {
                         role: role
                     });
                     return response.added.push(role.name);
+                }
+            });
+        } catch(err) {
+            console.error(err);
+        }
+        return response;
+    }
+    async deleteRoleAsync(message, roles) {
+        const guildId = message.guild.id;
+        const response = {
+            deleted: [],
+            nonexistent: []
+        };
+        try {
+            roles.map(role => {
+                if (this._store.find(element => element.guildId === guildId && element.roleId === role.id)) {
+                    this._store = this._store.filter(element => element.roleId !== role.id);
+                    return response.deleted.push(role.name);
+                } else {
+                    return response.nonexistent.push(role.name);
                 }
             });
         } catch(err) {

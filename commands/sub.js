@@ -3,22 +3,27 @@ const RoleSub = require('./RoleSub/RoleSub');
 
 const description = '';
 const MANAGE_ROLES = 'MANAGE_ROLES';
+const ADD = 'ADD';
+const DELETE = 'DELETE';
 const sub = new RoleSub();
 
 module.exports = {
     name: 'sub',
-    usage: '[game name] [hours] [optional: platform]',
-    aliases: ['g', 'lfg'],
+    usage: '[task] [role] [optional: multiple roles]',
+    aliases: [],
     description: description,
     cooldown: 3,
     execute(message, args) {
         if (args.includes('list')) {
-            showList(message);
-            return;
+            return showList(message);
         }
         if (args.includes('add')) {
-            return tryAddRole(message, args);
+            return updateRoles(ADD, message, args);
         }
+        if (args.includes('delete')) {
+            return updateRoles(DELETE, message, args);
+        }
+        
     }
 };
 
@@ -37,34 +42,67 @@ function showList(message) {
 function prettify(message, list, title) {
     let result = `__${title}__\n`;
     list.forEach(item => {
-        result += `${item.role['name']}\n`
+        if (item.role) {
+            result += `${item.role['name']}\n`;
+        }
     });
     return result;
 }
 
-function tryAddRole(message, args) {
+function updateRoles(task, message, args) {
     const name = message.member.displayName || message.author.name;
 
     if (message.member.hasPermission(MANAGE_ROLES)) {
-        console.log(`${name} has permission: ${MANAGE_ROLES}`.green);
-        const roleArgs = args.filter(word => word !== 'add');
-        return sub.addRole(message, roleArgs)
-            .then(result => {
-                console.log('\nLet\'s print what happened'.magenta);
-                if (result.response.added.length) {
-                    console.log(`Added: ${result.response.added.join(', ')}`);
-                }
-                if (result.response.exists.length) {
-                    console.log(`Already exists: ${result.response.exists.join(', ')}`);
-                }
-                if (result.invalidRoles.length) {
-                    console.log(`Roles that don't exist: ${result.invalidRoles.join(', ')}`);
-                }
-             })
-            .catch(console.error);
+        console.log(`\n${name} has permission: ${MANAGE_ROLES}`.green);
+        console.log(`Let's print what happened, ${name}`.magenta);
+        const roleArgs = args.filter(word => word !== task.toLowerCase());
+        switch(task) {
+            case ADD:
+                return tryAddRoles(task, message, roleArgs);
+            case DELETE:
+                return tryDeleteRoles(task, message, roleArgs);
+            default:
+                return;
+        }
     } else {
         console.log(`${name} does not have permission: ${MANAGE_ROLES}`.red);
         return message.channel.send(`${message.author}, you don't have permission!`);
     }
+}
+
+function tryAddRoles(task, message, roleArgs) {
+    return sub.updateRoles(task, message, roleArgs)
+        .then(result => {
+            if (result.response) {
+                if (result.response.added && result.response.added.length) {
+                    console.log(`Added: ${result.response.added.join(', ')}`);
+                }
+                if (result.response.existing && result.response.existing.length) {
+                    console.log(`Already exists: ${result.response.existing.join(', ')}`);
+                }
+            }
+            if (result.invalidRoles && result.invalidRoles.length) {
+                console.log(`Roles that don't exist: ${result.invalidRoles.join(', ')}`);
+            }
+        })
+        .catch(console.error);
+}
+
+function tryDeleteRoles(task, message, roleArgs) {
+    return sub.updateRoles(task, message, roleArgs)
+        .then(result => {
+            if (result.response) {
+                if (result.response.deleted && result.response.deleted.length) {
+                    console.log(`Deleted: ${result.response.deleted.join(', ')}`);
+                }
+                if (result.response.nonexistent && result.response.nonexistent.length) {
+                    console.log(`Not on list: ${result.response.nonexistent.join(', ')}`);
+                }
+            }
+            if (result.invalidRoles && result.invalidRoles.length) {
+                console.log(`Roles that don't exist: ${result.invalidRoles.join(', ')}`);
+            }
+        })
+        .catch(console.error);
 }
 
