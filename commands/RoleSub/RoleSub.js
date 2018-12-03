@@ -6,16 +6,26 @@ module.exports = class RoleSub {
     }
 
     async addRole(message, roleArgs) {
-        const validRoles = await roleArgs.map(arg => message.guild.roles.find(role => role.name === arg))
-            .filter(role => role !== null);
-        console.log(validRoles);
-        if (validRoles.length) {
-            let result;
+        const result = {};
+        result.invalidRoles = [];
+        result.validRoles = roleArgs.map(arg => {
+            const role = message.guild.roles.find(role => role.name === arg);
+            if (role !== null) {
+                return role;
+            } else {
+                result.invalidRoles.push(arg);
+                return null;
+            }
+        }).filter(role => role !== null);
+
+        if (result.validRoles.length) {
+            let response;
             try {
-                result = await this._db.addRoleAsync(message, validRoles)
+                response = await this._db.addRoleAsync(message, result.validRoles)
             } catch(err) {
                 console.error(err);
             }
+            result.response = response;
             return result;
         } else {
             return `No valid roles`;

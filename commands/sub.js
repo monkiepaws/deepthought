@@ -13,7 +13,8 @@ module.exports = {
     cooldown: 3,
     execute(message, args) {
         if (args.includes('list')) {
-            return showList(message);
+            showList(message);
+            return;
         }
         if (args.includes('add')) {
             return tryAddRole(message, args);
@@ -22,22 +23,23 @@ module.exports = {
 };
 
 function showList(message) {
-    const result = sub.list(message);
-    // turn into resolve of promise
-    console.log(result);
-    if (result.length) {
-        const reply = prettify(message, result, 'Valid roles');
-        return message.channel.send(reply);
-    } else {
-        return message.channel.send(`${message.author}, no roles to show on this server`);
-    }
+    return sub.list(message)
+        .then(result => {
+            if (result.length) {
+                const reply = prettify(message, result, 'Valid roles');
+                message.channel.send(`${reply}`);
+            } else {
+                return message.channel.send(`${message.author}, no roles to show on this server`);
+            }
+        });
 }
 
 function prettify(message, list, title) {
     let result = `__${title}__\n`;
     list.forEach(item => {
-        result += `${item}\n`
+        result += `${item.role['name']}\n`
     });
+    return result;
 }
 
 function tryAddRole(message, args) {
@@ -49,8 +51,16 @@ function tryAddRole(message, args) {
         return sub.addRole(message, roleArgs)
             .then(result => {
                 console.log('\nLet\'s print what happened'.magenta);
-                console.log(result);
-            })
+                if (result.response.added.length) {
+                    console.log(`Added: ${result.response.added.join(', ')}`);
+                }
+                if (result.response.exists.length) {
+                    console.log(`Already exists: ${result.response.exists.join(', ')}`);
+                }
+                if (result.invalidRoles.length) {
+                    console.log(`Roles that don't exist: ${result.invalidRoles.join(', ')}`);
+                }
+             })
             .catch(console.error);
     } else {
         console.log(`${name} does not have permission: ${MANAGE_ROLES}`.red);

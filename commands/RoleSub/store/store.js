@@ -4,26 +4,40 @@ module.exports = class Store {
     }
 
     async addRoleAsync(message, roles) {
-        console.log(this._store);
         const guildId = message.guild.id;
-        return roles.map(role => {
-            const roleId = role.id;
-            if (this._store.find(element => element.guildId === guildId && element.roleId === role.id)) {
-                return `${role.name} already added`;
-            } else {
-                this._store.push({ guildId, roleId, role });
-                return `${role.name} added`;
-            }
-        });
+        const response = {
+            added: [],
+            exists: []
+        };
+        try {
+            roles.map(role => {
+                if (this._store.find(element => element.guildId === guildId && element.roleId === role.id)) {
+                    return response.exists.push(role.name);
+                } else {
+                    this._store.push({
+                        guildId: guildId,
+                        roleId: role.id,
+                        role: role
+                    });
+                    return response.added.push(role.name);
+                }
+            });
+        } catch(err) {
+            console.error(err);
+        }
+        return response;
     }
 
     async getListAsync(message) {
-        const guildId = message.guild.id;
-        const response = this._store.filter(element => {
-            console.log(element, element.guildId, guildId);
-            return element.guildId === guildId;
-        });
-        console.log(response);
+        let response;
+        try {
+            const guildId = message.guild.id;
+            response = this._store.filter(element => {
+                return element.guildId === guildId;
+            });
+        } catch(err) {
+            console.error(err);
+        }
         return response;
     }
 };
