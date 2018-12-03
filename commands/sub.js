@@ -19,16 +19,8 @@ module.exports = {
 
 function sendList(message) {
     return roles.allowedRoles(message)
-        .then(response => roleNames(response))
+        .then(response => response.map(role => role['name']))
         .then(roles => roles.join('\n'))
         .then(roles => message.channel.send(`__Valid Names__\n${roles}`))
         .catch(console.error);
-}
-
-function roleNames(roles) {
-    const names = [];
-    roles.forEach(role => {
-        names.push(role['name']);
-    });
-    return names;
 }
