@@ -1,3 +1,4 @@
+const Discord = require('discord.js');
 const roles = require('./roles');
 
 const description = '';
@@ -22,7 +23,7 @@ function sendList(message) {
     return roles.allowedRoles(message)
         .then(response => response.map(role => role['name']))
         .then(roles => roles.join('\n'))
-        .then(roles => message.channel.send(`__Valid Roles__\n${roles}`))
+        .then(roles => message.channel.send(embeddedList(message, roles)))
         .catch(console.error);
 }
 
@@ -37,7 +38,15 @@ function subRoles(message, args) {
 function props() {
     return {
         method: 'addRoles',
-        action: 'subbed to',
-        title: 'no roles to sub'
+        action: 'subbed',
+        title: 'no roles to sub',
+        emoji: ':cupid:'
     };
+}
+
+function embeddedList(message, roles) {
+    return new Discord.RichEmbed()
+        .setColor('#ff0057')
+        .setTitle('**Role subs list** :heartpulse:')
+        .setDescription(`**${roles}**`);
 }

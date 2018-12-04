@@ -25,7 +25,8 @@ function unsubRoles(message, args) {
 function props() {
     return {
         method: 'removeRoles',
-        action: 'unsubbed from',
-        title: 'no roles to unsub'
+        action: 'unsubbed',
+        title: 'no roles to unsub',
+        emoji: ':broken_heart:'
     };
 }

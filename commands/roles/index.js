@@ -1,3 +1,5 @@
+const Discord = require('discord.js');
+
 module.exports = {
     async allowedRoles(message) {
         try {
@@ -35,7 +37,11 @@ function reply(message, rolesToUnsub, props) {
 }
 
 function changeMsg(message, rolesAdded, props) {
-    return `__${message.author}, ${props.action}__ - \`${stringifyMapProp(rolesAdded, 'name')}\``;
+    return new Discord.RichEmbed()
+        .setColor('#ff0057')
+        .setTitle(`**Role subs** ${props.emoji}`)
+        .setDescription(`**${stringifyMapProp(rolesAdded, 'name')}**`)
+        .addField(`were ${props.action} by`, `${message.author}`);
 }
 
 function stringifyMapProp(map, prop) {
