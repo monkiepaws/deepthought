@@ -1,6 +1,7 @@
 const fs = require("fs");
 const Discord = require("discord.js");
 const { prefix, token } = require("./dev.json");
+const regex = /^[\w\-\ \!\.]+$/g;
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
@@ -33,6 +34,10 @@ client.on("message", message => {
     // 2. The Message author is a bot
     // 3. The Message was sent through a DM
     if (message.content.startsWith(prefix) === false || message.author.bot === true || message.channel.type === 'dm') {
+        return;
+    }
+
+    if (!message.content.match(regex)) {
         return;
     }
 

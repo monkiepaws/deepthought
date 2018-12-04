@@ -7,6 +7,15 @@ module.exports = {
         } catch(err) {
             console.error(err);
         }
+    },
+
+    request(message, rolesToSub, props) {
+        if (rolesToSub.size) {
+            return message.member[props.method](rolesToSub)
+                .then(() => reply(message, rolesToSub, props));
+        } else {
+            return message.channel.send(`${message.author}, ${props.title}`);
+        }
     }
 };
 
@@ -19,4 +28,17 @@ async function getMyPosition(message) {
     const myRoles = message.guild.me.roles
         .sort((a, b) => b['position'] - a['position']);
     return await myRoles.first(1)[0];
+}
+
+function reply(message, rolesToUnsub, props) {
+    return message.channel.send(changeMsg(message, rolesToUnsub, props));
+}
+
+function changeMsg(message, rolesAdded, props) {
+    return `__${message.author}, ${props.action}__ - \`${stringifyMapProp(rolesAdded, 'name')}\``;
+}
+
+function stringifyMapProp(map, prop) {
+    return map.map(element => element[prop])
+        .join(', ');
 }
