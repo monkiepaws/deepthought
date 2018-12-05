@@ -3,6 +3,7 @@ auth.json
 auth.js
 config.json
 *secrets.js
+dev.json
 
 # Webstorm
 .idea/
