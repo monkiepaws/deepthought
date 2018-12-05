@@ -8,7 +8,7 @@ module.exports = {
     description: description,
     cooldown: 2,
     execute(message, args) {
-        const guilds = Discord.client.guilds.map(guild => guild['name']);
+        const guilds = message.client.guilds.map(guild => guild['name']);
         const embed = Discord.RichEmbed()
             .setColor('#00ff7b')
             .setTitle('I\'m at home in:')
