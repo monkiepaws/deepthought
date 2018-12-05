@@ -1,7 +1,7 @@
 // TODO:
 // 3. Add by-platform list ~~ I'm observing performance of ordering all lists as:
 //                  Platform > Game > Time available
-
+const { RichEmbed } = require('discord.js');
 const Beacon = require('./Beacon/Beacon.js');
 function initGames() {
     const { games } = require("./gamesdata/games.json");
@@ -123,7 +123,7 @@ function addToList(newBeacon, message) {
 function messageOnAddBeacon(newBeacon, result, message) {
     if (result.rowsAffected.find(value => value > 0)) {
         const game = newBeacon.gameName;
-        const platform = newBeacon.platformName;
+        const platform = newBeacon.platformName === 'pc' ? '' : newBeacon.platformName.toUpperCase();
         const gameMessage = games.get(game).message;
         let success = '';
         result.recordset.map(currentBeacon => {
@@ -131,12 +131,18 @@ function messageOnAddBeacon(newBeacon, result, message) {
                 success += `<@${currentBeacon.UserId}>\t`;
             }
         });
-        success += `${gameMessage}\n`;
-        success += `${message.author} added you to the ${game.toUpperCase()} ${platform === 'pc' ? '' : platform.toUpperCase()} waiting list!`;
-        return message.channel.send(success);
+        success += `\n${message.author} added you to the ${game.toUpperCase()} ${platform} waiting list!`;
+        return message.channel.send(embeddedAddBeaconMsg(gameMessage, success));
     } else {
         return message.channel.send(`${message.author}, something went wrong and you weren't added to a waiting list!`);
     }
+}
+
+function embeddedAddBeaconMsg(gameMessage, success) {
+    return new RichEmbed()
+        .setColor('#00ffb9')
+        .setTitle(gameMessage)
+        .setDescription(success)
 }
 
 function embeddedGamesList() {
@@ -161,7 +167,7 @@ function embeddedGamesList() {
     });
 
     return {
-        color: 0xff4992,
+        color: 0x00ffb9,
         title: `List of valid games and platforms`,
         author: {
             name: `WP Looking For Games`
