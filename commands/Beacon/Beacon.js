@@ -66,7 +66,7 @@ module.exports = class Beacon {
             const minutes = Math.floor(available % 60);
             const showHours = hours > 0 ? ` ${hours}` : ' ';
 
-            list += `\:izakaya_lantern:`;
+            list += `🏮`;
             list += `${GameName.toUpperCase()}`.padEnd(7);
             list += `${Username}`.padEnd(18).slice(0, 18);
             list += showHours === ' ' ? ''.padEnd(9) : `${showHours}${hours === 1 ? ` hour  ` : ` hours `}`.padEnd(8);
