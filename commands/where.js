@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+const { RichEmbed } = require('discord.js');
 const description = '';
 const config = require('../config.json');
 
@@ -11,7 +11,7 @@ module.exports = {
     execute(message, args) {
         if (message.author.id === config.polyDiscordID) {
             const guilds = message.client.guilds.map(guild => guild['name']);
-            const embed = new Discord.RichEmbed()
+            const embed = new RichEmbed()
                 .setColor('#00ff7b')
                 .setTitle('I\'m at home in:')
                 .setDescription(`${guilds.join('\n')}`);

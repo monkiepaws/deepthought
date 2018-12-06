@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+const { RichEmbed } = require('discord.js');
 
 module.exports = {
     async allowedRoles(message) {
@@ -37,7 +37,7 @@ function reply(message, rolesToUnsub, props) {
 }
 
 function changeMsg(message, rolesAdded, props) {
-    return new Discord.RichEmbed()
+    return new RichEmbed()
         .setColor('#ff0057')
         .setTitle(`**Role subs** ${props.emoji}`)
         .setDescription(`**${stringifyMapProp(rolesAdded, 'name')}**`)

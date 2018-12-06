@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+const { RichEmbed } = require('discord.js');
 const roles = require('./roles');
 
 const description = '';
@@ -45,7 +45,7 @@ function props() {
 }
 
 function embeddedList(message, roles) {
-    return new Discord.RichEmbed()
+    return new RichEmbed()
         .setColor('#ff0057')
         .setTitle('**Role subs list** :heartpulse:')
         .setDescription(`**${roles}**`);
