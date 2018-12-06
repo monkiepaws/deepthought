@@ -27,6 +27,6 @@ function props() {
         method: 'removeRoles',
         action: 'unsubbed',
         title: 'no roles to unsub',
-        emoji: ':broken_heart:'
+        emoji: '\:broken_heart:'
     };
 }

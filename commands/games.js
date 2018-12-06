@@ -141,7 +141,7 @@ function messageOnAddBeacon(newBeacon, result, message) {
 function embeddedAddBeaconMsg(gameMessage, success) {
     return new RichEmbed()
         .setColor('#00ffb9')
-        .setTitle(`:izakaya_lantern: ${gameMessage}`)
+        .setTitle(`\:izakaya_lantern: ${gameMessage}`)
         .setDescription(success)
 }
 

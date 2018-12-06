@@ -40,13 +40,13 @@ function props() {
         method: 'addRoles',
         action: 'subbed',
         title: 'no roles to sub',
-        emoji: ':cupid:'
+        emoji: '\:cupid:'
     };
 }
 
 function embeddedList(message, roles) {
     return new RichEmbed()
         .setColor('#ff0057')
-        .setTitle('**Role subs list** :heartpulse:')
+        .setTitle('**Role subs list** \:heartpulse:')
         .setDescription(`**${roles}**`);
 }
