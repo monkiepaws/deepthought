@@ -37,7 +37,7 @@ client.on("message", message => {
         return;
     }
 
-    // 4. Message contains disallowed characters
+    // 4. The Message contains disallowed characters
     if (!message.content.match(regex)) {
         return;
     }

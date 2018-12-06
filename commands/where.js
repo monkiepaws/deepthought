@@ -1,4 +1,3 @@
-
 const Discord = require('discord.js');
 const description = '';
 const config = require('../config.json');
