@@ -29,7 +29,7 @@ client.login(token)
     .catch(err => console.error(err));
 
 client.on("message", message => {
-    // If the message meets one of these three conditions, do nothing :
+    // If the message meets one of these four conditions, do nothing :
     // 1. Message doesn't start with the prefix
     // 2. The Message author is a bot
     // 3. The Message was sent through a DM
