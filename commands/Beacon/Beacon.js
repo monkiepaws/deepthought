@@ -1,7 +1,9 @@
 // This class is the middle man between the bot and the data
 // access layer (in this case, BeaconDb)
 const BeaconDb = require('./db/BeaconDb.js');
+const colors = require('colors');
 const allGames = 'all games';
+const SUCCESS = 0;
 
 module.exports = class Beacon {
     constructor() {
@@ -28,16 +30,40 @@ module.exports = class Beacon {
         return this.messageList(title, result);
     }
 
-    async addBeacon(newBeacon) {
-        const { userId, username, gameName, platformName, minutesAvailable } = newBeacon;
-        let result;
-        try {
-            result = await this._db.sendBeacon(userId, username, gameName, platformName, minutesAvailable);
-        } catch (err) {
-            console.log(err);
-        }
-        return result;
+    async addBeacon(beacons) {
+        let promises = [];
+        beacons.games.forEach(async (game, index) => {
+            const beacon = {
+                userId: beacons.userId,
+                username: beacons.username,
+                gameName: game,
+                platformName: beacons.platforms[index],
+                minutesAvailable: beacons.minutesAvailable
+            };
+            promises.push(this._db.sendBeacon(beacon));
+        });
+        return Promise.all(promises);
     }
+
+    // format(response) {
+    //     return response.map(record => {
+    //         let beacon = {};
+    //         if (record.returnValue === SUCCESS) {
+    //             const recordset = record.recordset[0];
+    //             console.log(recordset);
+    //             beacon.userId = recordset.UserId;
+    //             beacon.gameName = recordset.GameName;
+    //             beacon.platformName = recordset.PlatformName;
+    //             beacon.success = true;
+    //         } else {
+    //             beacon.userId = null;
+    //             beacon.gameName = null;
+    //             beacon.platformName = null;
+    //             beacon.success = false;
+    //         }
+    //         return beacon;
+    //     });
+    // }
 
     async removeFromListByID(userId) {
         let result;

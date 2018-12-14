@@ -90,6 +90,13 @@
       "platforms": ["ps4", "pc"],
       "defaultPlatform": "pc",
       "message": "Here comes a new challenger!"
+    },
+    "smash": {
+      "title": "Super Smash Bros Ultimate",
+      "aliases": ["ssb", "ssbu", "smesh"],
+      "platforms": ["switch"],
+      "defaultPlatform": "switch",
+      "message": "A new foe has appeared!"
     }
   }
 }

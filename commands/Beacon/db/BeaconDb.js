@@ -51,15 +51,15 @@ module.exports = class BeaconDb {
         }
     }
 
-    async sendBeacon(userId, username, gameName, platformName, minutesAvailable) {
+    async sendBeacon(beacon) {
         try {
             const connection = await this.getConnection();
             const request = await new sql.Request(connection);
-            return request.input(`UserId`, sql.VarChar, userId.toString())
-                .input(`Username`, sql.NVarChar, username)
-                .input(`GameName`, sql.NVarChar, gameName)
-                .input(`PlatformName`, sql.NVarChar, platformName)
-                .input(`MinutesAvailable`, sql.Int, minutesAvailable)
+            return request.input(`UserId`, sql.VarChar, beacon.userId.toString())
+                .input(`Username`, sql.NVarChar, beacon.username)
+                .input(`GameName`, sql.NVarChar, beacon.gameName)
+                .input(`PlatformName`, sql.NVarChar, beacon.platformName)
+                .input(`MinutesAvailable`, sql.Int, beacon.minutesAvailable)
                 .execute(`spBeacon_Insert`);
         } catch (err) {
             console.log(err);

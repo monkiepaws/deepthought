@@ -11,10 +11,11 @@ module.exports = {
     description: description,
     cooldown: 3,
     execute(message, args) {
+        const newArgs = args.slice(0, MAX_ARGS);
         if (args.includes('list')) {
             return sendList(message);
         } else {
-            return subRoles(message, args.slice(0, MAX_ARGS));
+            return subRoles(message, newArgs);
         }
     }
 };
