@@ -5,7 +5,7 @@ const description = '';
 const MAX_ARGS = 5;
 
 module.exports = {
-    name: 'tsub',
+    name: 'sub',
     usage: '[list/role] [optional: up to 5 roles total]',
     aliases: [],
     description: description,
