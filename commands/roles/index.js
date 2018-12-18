@@ -1,4 +1,17 @@
 const { RichEmbed } = require('discord.js');
+const bannedPermissions = [
+    'ADMINISTRATOR',
+    'KICK_MEMBERS',
+    'BAN_MEMBERS',
+    'MANAGE_CHANNELS',
+    'MANAGE_GUILD',
+    'CHANGE_NICKNAME',
+    'MANAGE_MESSAGES',
+    'MANAGE_NICKNAMES',
+    'MANAGE_ROLES',
+    'MANAGE_WEBHOOKS',
+    'MANAGE_EMOJIS'
+];
 
 module.exports = {
     async allowedRoles(message) {
@@ -23,7 +36,16 @@ module.exports = {
 
 async function allowedRoles(message) {
     const myPosition = await getMyPosition(message);
-    return message.guild.roles.filter(role => role.comparePositionTo(myPosition) < 0 && role['position'] !== 0);
+    const rolesBelowMe = message.guild.roles.filter(role => role.comparePositionTo(myPosition) < 0 && role['position'] !== 0);
+    const allowableRoles = rolesBelowMe.filter(role => {
+        const hasBannedPermission = bannedPermissions.some(permission => role.hasPermission(permission));
+        if (hasBannedPermission) {
+            return false;
+        } else {
+            return true;
+        }
+    });
+    return allowableRoles;
 }
 
 async function getMyPosition(message) {

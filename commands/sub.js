@@ -5,7 +5,7 @@ const description = '';
 const MAX_ARGS = 5;
 
 module.exports = {
-    name: 'sub',
+    name: 'tsub',
     usage: '[list/role] [optional: up to 5 roles total]',
     aliases: [],
     description: description,
@@ -45,8 +45,12 @@ function props() {
 }
 
 function embeddedList(message, roles) {
-    return new RichEmbed()
-        .setColor('#ff0057')
-        .setTitle('**Role subs list** \:heartpulse:')
-        .setDescription(`**${roles}**`);
+    if (!roles.length) {
+        return `Sorry, no valid roles, ${message.author}!`;
+    } else {
+        return new RichEmbed()
+            .setColor('#ff0057')
+            .setTitle('**Role subs list** \:heartpulse:')
+            .setDescription(`**${roles}**`);
+    }
 }
