@@ -123,25 +123,27 @@ function addToList(newBeacon, message) {
 function messageOnAddBeacon(newBeacon, result, message) {
     if (result.rowsAffected.find(value => value > 0)) {
         const game = newBeacon.gameName;
-        const platform = newBeacon.platformName === 'pc' ? '' : newBeacon.platformName.toUpperCase();
+        const platformName = newBeacon.platformName;
+        const platform = platformName === 'pc' ? '' : platformName.toUpperCase();
         const gameMessage = games.get(game).message;
         let success = '';
         result.recordset.map(currentBeacon => {
-            if (currentBeacon.UserId !== message.author.id && currentBeacon.PlatformName === platform) {
+            if (currentBeacon.UserId !== message.author.id && currentBeacon.PlatformName === platformName) {
                 success += `<@${currentBeacon.UserId}>\t`;
             }
         });
+        success += `**${gameMessage}**`;
         success += `\n${message.author} added you to the ${game.toUpperCase()} ${platform} waiting list!`;
-        return message.channel.send(embeddedAddBeaconMsg(gameMessage, success));
+        return message.channel.send(embeddedAddBeaconMsg(success));
     } else {
         return message.channel.send(`${message.author}, something went wrong and you weren't added to a waiting list!`);
     }
 }
 
-function embeddedAddBeaconMsg(gameMessage, success) {
+function embeddedAddBeaconMsg(success) {
     return new RichEmbed()
         .setColor('#00ffb9')
-        .setTitle(`🏮 ${gameMessage}`)
+        .setTitle(`🏮 Looking for games service`)
         .setDescription(success)
 }
 
