@@ -131,6 +131,18 @@
     },
     "kof": {
       "game": "kof14"
+    },
+    "smash": {
+      "game": "smash"
+    },
+    "ssb": {
+      "game": "smash"
+    },
+    "ssbu": {
+      "game": "smash"
+    },
+    "smesh": {
+      "game": "smash"
     }
   }
 }
