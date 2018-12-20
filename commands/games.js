@@ -49,7 +49,7 @@ module.exports = {
 
         // If the first argument is stop - delete user from the waiting list
         if (args[0] === "stop") {
-            return removeFromList(message);
+            return this.removeFromList(message);
         }
 
         // Check if the game is valid through the aliases Map
@@ -88,6 +88,19 @@ module.exports = {
 
         return addToList(newBeacon, message);
     },
+
+    removeFromList(message) {
+        return beacon.removeFromListByID(message.author.id.toString())
+            .then(success => {
+                if (success) {
+                    const text = `${message.author} stopped waiting: **gl;hf!** 🎉`;
+                    return message.channel.send(embeddedMessage(text));
+                } else {
+                    return message.channel.send(`${message.author}, I don't think you were on the waiting list!  🤔`);
+                }
+            })
+            .catch(err => console.log(err));
+    }
 };
 
 function showList(message) {
@@ -99,18 +112,6 @@ function showList(message) {
 function showListOfGame(game, title, message) {
     return beacon.showListOfGame(game, title)
         .then(list => message.channel.send(list))
-        .catch(err => console.log(err));
-}
-
-function removeFromList(message) {
-    return beacon.removeFromListByID(message.author.id.toString())
-        .then(success => {
-            if (success) {
-                return message.channel.send(`${message.author}, if you were on the waiting list, I've removed you!`);
-            } else {
-                return message.channel.send(`${message.author}, I don't think you were on the waiting list!  🤔`);
-            }
-        })
         .catch(err => console.log(err));
 }
 
@@ -127,7 +128,7 @@ function messageOnAddBeacon(newBeacon, result, message) {
         const platform = platformName === 'pc' ? '' : platformName.toUpperCase();
         const gameMessage = games.get(game).message;
         let mentions = '';
-        let success = '';
+        let text = '';
         result.recordset.map(currentBeacon => {
             if (currentBeacon.UserId !== message.author.id && currentBeacon.PlatformName === platformName) {
                 mentions += `<@${currentBeacon.UserId}>\t`;
@@ -135,18 +136,18 @@ function messageOnAddBeacon(newBeacon, result, message) {
         });
         mentions += `**${gameMessage}**`;
         message.channel.send(mentions);
-        success += `\n${message.author} added you to the ${game.toUpperCase()} ${platform} waiting list!`;
-        return message.channel.send(embeddedAddBeaconMsg(success));
+        text += `\n${message.author} added you to the ${game.toUpperCase()} ${platform} waiting list!`;
+        return message.channel.send(embeddedMessage(text));
     } else {
         return message.channel.send(`${message.author}, something went wrong and you weren't added to a waiting list!`);
     }
 }
 
-function embeddedAddBeaconMsg(success) {
+function embeddedMessage(text) {
     return new RichEmbed()
         .setColor('#00ffb9')
         .setTitle(`🏮 Looking for games service`)
-        .setDescription(success)
+        .setDescription(text)
 }
 
 function embeddedGamesList() {
