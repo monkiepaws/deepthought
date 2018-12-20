@@ -28,6 +28,7 @@ Command | Title | Platforms
 **MVCI** | Marvel vs Capcom: Infinite | `PS4, PC, XBOX`
 **SC6** | SoulCalibur 6 | `PS4, PC, XBOX`
 **SFV** | Street Fighter V | `PS4, PC`
+**SMASH** | Super Smash Bros. Ultimate | `SWITCH`
 **ST** | Super Turbo | `PS4, PC, FC`
 **TEKKEN** | Tekken 7 | `PS4, PC, XBOX`
 **UNIST** | Under Nigh... The other ST | `PS4, PC`
