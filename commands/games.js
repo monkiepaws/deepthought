@@ -126,13 +126,15 @@ function messageOnAddBeacon(newBeacon, result, message) {
         const platformName = newBeacon.platformName;
         const platform = platformName === 'pc' ? '' : platformName.toUpperCase();
         const gameMessage = games.get(game).message;
+        let mentions = '';
         let success = '';
         result.recordset.map(currentBeacon => {
             if (currentBeacon.UserId !== message.author.id && currentBeacon.PlatformName === platformName) {
-                success += `<@${currentBeacon.UserId}>\t`;
+                mentions += `<@${currentBeacon.UserId}>\t`;
             }
         });
-        success += `**${gameMessage}**`;
+        mentions += `**${gameMessage}**`;
+        message.channel.send(mentions);
         success += `\n${message.author} added you to the ${game.toUpperCase()} ${platform} waiting list!`;
         return message.channel.send(embeddedAddBeaconMsg(success));
     } else {
