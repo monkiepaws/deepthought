@@ -20,6 +20,7 @@ Post or DM the bot with `!games list`  for a list of games the bot accepts.
 Command | Title | Platforms
 ------- | ----- | ---------
 **3S** | 3rd Strike | `PS4, PC, FC`
+**BBXTAG | BlazBlue x Tag Battle | `PS4, PC, SWITCH`
 **DBZ** | Dragonball FighterZ | `PS4, PC, XBOX, SWITCH`
 **FC** | Fightcade | `PC`
 **GG** | Guilty Gear Xrd: Rev2 | `PS4, PC`

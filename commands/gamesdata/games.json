@@ -97,6 +97,13 @@
       "platforms": ["switch"],
       "defaultPlatform": "switch",
       "message": "A new foe has appeared!"
+    },
+    "bbxtag": {
+      "title": "BlazBlue x Tag Battle",
+      "aliases": ["bbtag", "bbxt", "bbx", "bbt", "xtag", "tag"],
+      "platforms": ["pc", "ps4", "switch"],
+      "defaultPlatform": "pc",
+      "message": "...is now on the way!"
     }
   }
 }

@@ -143,6 +143,27 @@
     },
     "smesh": {
       "game": "smash"
+    },
+    "bbxtag": {
+      "game": "bbxtag"
+    },
+    "bbxt": {
+      "game": "bbxtag"
+    },
+    "bbt": {
+      "game": "bbxtag"
+    },
+    "bbtag": {
+      "game": "bbxtag"
+    },
+    "bbx": {
+      "game": "bbxtag"
+    },
+    "tag": {
+      "game": "bbxtag"
+    },
+    "xtag": {
+      "game": "bbxtag"
     }
   }
 }
