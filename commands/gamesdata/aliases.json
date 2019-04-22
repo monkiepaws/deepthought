@@ -164,6 +164,15 @@
     },
     "xtag": {
       "game": "bbxtag"
+    },
+    "mk11": {
+      "game": "mk11"
+    },
+    "m11": {
+      "game": "mk11"
+    },
+    "mk": {
+      "game": "mk11"
     }
   }
 }

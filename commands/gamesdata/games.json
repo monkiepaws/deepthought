@@ -104,6 +104,13 @@
       "platforms": ["pc", "ps4", "switch"],
       "defaultPlatform": "pc",
       "message": "...is now on the way!"
+    },
+    "mk11": {
+      "title": "Mortal Kombat 11",
+      "aliases": ["m11", "mk"],
+      "platforms": ["pc", "ps4", "switch", "xbox"],
+      "defaultPlatform": "pc",
+      "message": "...you're next."
     }
   }
 }
