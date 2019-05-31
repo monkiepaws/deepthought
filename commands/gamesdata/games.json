@@ -100,7 +100,7 @@
     },
     "kof2002": {
       "title": "King of Fighters 2002 (UM)",
-      "aliases": ["kof2k2", "kof2002um", "kof2k2um],
+      "aliases": ["kof2k2", "kof2002um", "kof2k2um"],
       "platforms": ["pc", "fc"],
       "defaultPlatform": "fc",
       "message": "Here comes a new challenger!"
