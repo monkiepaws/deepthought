@@ -15,6 +15,13 @@
       "message": "Here comes a new challenger!"
     },
     "3s": {
+      "title": "Street Fighter Alpha",
+      "aliases": ["sfa2", "sfa3"],
+      "platforms": ["pc", "fc"],
+      "defaultPlatform": "fc",
+      "message": "Now, fight a new rival!"
+    },
+    "3s": {
       "title": "3rd Strike",
       "aliases": ["sf3", "sfiii", "3rdstrike", "goat", "thegoat"],
       "platforms": ["ps4", "pc", "fc"],
@@ -84,9 +91,23 @@
       "defaultPlatform": "pc",
       "message": "Here comes a new challenger!"
     },
+    "kof98": {
+      "title": "King of Fighters 98 (UM)",
+      "aliases": ["kof98", "kof98um"],
+      "platforms": ["pc", "fc"],
+      "defaultPlatform": "fc",
+      "message": "Here comes a new challenger!"
+    },
+    "kof2002": {
+      "title": "King of Fighters 2002 (UM)",
+      "aliases": ["kof2k2", "kof2002um", "kof2k2um],
+      "platforms": ["pc", "fc"],
+      "defaultPlatform": "fc",
+      "message": "Here comes a new challenger!"
+    },
     "kof14": {
       "title": "King of Fighters 14",
-      "aliases": ["kof"],
+      "aliases": ["kof14"],
       "platforms": ["ps4", "pc"],
       "defaultPlatform": "pc",
       "message": "Here comes a new challenger!"
