@@ -14,8 +14,8 @@
       "defaultPlatform": "pc",
       "message": "Here comes a new challenger!"
     },
-    "3s": {
-      "title": "Street Fighter Alpha",
+    "sfa": {
+      "title": "Street Fighter Alpha 2/3",
       "aliases": ["sfa2", "sfa3"],
       "platforms": ["pc", "fc"],
       "defaultPlatform": "fc",
