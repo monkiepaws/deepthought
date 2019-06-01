@@ -9,6 +9,27 @@
     "sc6": {
       "game": "sc6"
     },
+    "sfa2": {
+      game: "sfa"
+    },
+    "sfa3": {
+      game: "sfa"
+    },
+    "kof98": {
+      game: "kof98"
+    },
+    "kof98um": {
+      game: "kof98"
+    },
+    "kof2k2": {
+      game: "kof2002"
+    },
+    "kof2002um": {
+      game: "kof2002"
+    },
+    "kof2k2um": {
+      game: "kof2002"
+    },
     "sc": {
       "game": "sc6"
     },
