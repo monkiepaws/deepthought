@@ -24,10 +24,11 @@ Command | Title | Platforms
 **DBZ** | Dragonball FighterZ | `PS4, PC, XBOX, SWITCH`
 **FC** | Fightcade | `PC`
 **GG** | Guilty Gear Xrd: Rev2 | `PS4, PC`
-**KOF98** | KoF98 (UM) | `FC` `PC`
-**KOF2002** | KoF2002 (UM)| `FC` `PC`
+**KOF98** | KoF98 (UM) | `FC, PC`
+**KOF2002** | KoF2002 (UM)| `FC, PC`
 **KOF14** | King of Fighters 14 | `PS4, PC`
 **MHW** | Monster Hunter World | `PS4, PC`
+**MK11** | Mortal Kombat 11 | `PC, PS4, XBOX, SWITCH`
 **MVCI** | Marvel vs Capcom: Infinite | `PS4, PC, XBOX`
 **SC6** | SoulCalibur 6 | `PS4, PC, XBOX`
 **SFV** | Street Fighter V | `PS4, PC`
