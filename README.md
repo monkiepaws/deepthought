@@ -20,10 +20,12 @@ Post or DM the bot with `!games list`  for a list of games the bot accepts.
 Command | Title | Platforms
 ------- | ----- | ---------
 **3S** | 3rd Strike | `PS4, PC, FC`
-**BBXTAG | BlazBlue x Tag Battle | `PS4, PC, SWITCH`
+**BBXTAG** | BlazBlue x Tag Battle | `PS4, PC, SWITCH`
 **DBZ** | Dragonball FighterZ | `PS4, PC, XBOX, SWITCH`
 **FC** | Fightcade | `PC`
 **GG** | Guilty Gear Xrd: Rev2 | `PS4, PC`
+**KOF98** | KoF98 (UM) | `FC` `PC`
+**KOF2002** | KoF2002 (UM)| `FC` `PC`
 **KOF14** | King of Fighters 14 | `PS4, PC`
 **MHW** | Monster Hunter World | `PS4, PC`
 **MVCI** | Marvel vs Capcom: Infinite | `PS4, PC, XBOX`
@@ -31,6 +33,7 @@ Command | Title | Platforms
 **SFV** | Street Fighter V | `PS4, PC`
 **SMASH** | Super Smash Bros. Ultimate | `SWITCH`
 **ST** | Super Turbo | `PS4, PC, FC`
+**SFA** | Street Fighter Alpha 2 / 3 | `FC`
 **TEKKEN** | Tekken 7 | `PS4, PC, XBOX`
 **UNIST** | Under Nigh... The other ST | `PS4, PC`
 **USF4** | Ultra Street Fighter 4 | `PS4, PC, 360, PS3`
