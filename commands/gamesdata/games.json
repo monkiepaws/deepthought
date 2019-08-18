@@ -132,6 +132,13 @@
       "platforms": ["pc", "ps4", "switch", "xbox"],
       "defaultPlatform": "pc",
       "message": "...you're next."
+    },
+    "samsho": {
+      "title": "Samurai Shodown",
+      "aliases": [],
+      "platforms": ["pc", "ps4", "switch", "xbox"],
+      "defaultPlatform": "pc",
+      "message": "Here comes a new challenger!"
     }
   }
 }

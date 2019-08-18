@@ -194,6 +194,9 @@
     },
     "mk": {
       "game": "mk11"
+    },
+    "samsho": {
+      "game": "samsho"
     }
   }
 }
