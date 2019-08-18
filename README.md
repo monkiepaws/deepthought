@@ -30,6 +30,7 @@ Command | Title | Platforms
 **MHW** | Monster Hunter World | `PS4, PC`
 **MK11** | Mortal Kombat 11 | `PC, PS4, XBOX, SWITCH`
 **MVCI** | Marvel vs Capcom: Infinite | `PS4, PC, XBOX`
+**SAMSHO** | Samurai Shodown | `PS4, PC, XBOX, SWITCH`
 **SC6** | SoulCalibur 6 | `PS4, PC, XBOX`
 **SFV** | Street Fighter V | `PS4, PC`
 **SMASH** | Super Smash Bros. Ultimate | `SWITCH`
