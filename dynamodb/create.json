@@ -29,6 +29,10 @@
       "AttributeType": "S"
     },
     {
+      "AttributeName": "StartTime",
+      "AttributeType": "N"
+    },
+    {
       "AttributeName": "EndTime",
       "AttributeType": "N"
     }
@@ -40,7 +44,7 @@
       "KeyType": "HASH"
     },
     {
-      "AttributeName": "EndTime",
+      "AttributeName": "StartTime",
       "KeyType": "RANGE"
     }
   ],
@@ -64,6 +68,7 @@
           "Username",
           "GameName",
           "PlatformName",
+          "StartTime",
           "EndTime"
         ]
       },
@@ -91,6 +96,7 @@
           "Username",
           "GameName",
           "PlatformName",
+          "StartTime",
           "EndTime"
         ]
       },
@@ -118,6 +124,7 @@
           "Username",
           "GameName",
           "PlatformName",
+          "StartTime",
           "EndTime"
         ]
       },
@@ -145,6 +152,7 @@
           "Username",
           "GameName",
           "PlatformName",
+          "StartTime",
           "EndTime"
         ]
       },
@@ -192,6 +200,7 @@
           "Username",
           "GameName",
           "PlatformName",
+          "StartTime",
           "EndTime"
         ]
       },
