@@ -43,4 +43,38 @@ module.exports = class BeaconDynamoDb {
         const data = await docClient.query(params).promise();
         return data;
     }
+
+    async getBeaconsByUserId(userId) {
+        const dateTimeNow = Date.now()
+        const params = {
+            TableName: table,
+            IndexName: "BeaconsByUserId",
+            KeyConditionExpression: "UserId = :userId AND EndTime > :timeleft",
+            ExpressionAttributeValues: {
+                ":userId": userId,
+                ":timeleft": 2
+            }
+        };
+
+        const data = await docClient.query(params).promise();
+        return data.Items;
+    }
+
+    async stopBeaconsByUser(userId) {
+        const beacons = await this.getBeaconsByUserId(userId);
+
+        const promises = beacons.map(beacon => {
+            const params = {
+                TableName: table,
+                Key: {
+                    "UniqueId": beacon.UniqueId,
+                    "EndTime": beacon.EndTime
+                }
+            };
+            return docClient.delete(params).promise();
+        });
+
+        const response = await Promise.all(promises);
+        return response;
+    }
 }
