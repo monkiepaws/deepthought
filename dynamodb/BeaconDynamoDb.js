@@ -27,4 +27,20 @@ module.exports = class BeaconDynamoDb {
         const data = await docClient.query(params).promise();
         return data;
     }
+
+    async getBeaconsByGame(gameName) {
+        const dateTimeNow = Date.now()
+        const params = {
+            TableName: table,
+            IndexName: "BeaconsByGameName",
+            KeyConditionExpression: "GameName = :gamename AND EndTime > :timeleft",
+            ExpressionAttributeValues: {
+                ":gamename": gameName,
+                ":timeleft": 2
+            }
+        };
+
+        const data = await docClient.query(params).promise();
+        return data;
+    }
 }
