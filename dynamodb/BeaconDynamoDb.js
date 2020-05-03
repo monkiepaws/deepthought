@@ -5,17 +5,32 @@ AWS.config.update({
     endpoint: "http://localhost:8000"
 });
 
-const docClient = new AWS.DynamoDB.DocumentClient();
-const table = "WP_Beacons";
-
 module.exports = class BeaconDynamoDb {
     constructor() {
+        this._docClient = new AWS.DynamoDB.DocumentClient()
+        this._table = "WP_Beacons"
+    }
+
+    get docClient() {
+        return this._docClient
+    }
+
+    get table() {
+        return this._table
+    }
+
+    query(params) {
+        return this.docClient.query(params).promise()
+    }
+
+    put(params) {
+        return this.docClient.put(params).promise()
     }
 
     async getAvailableBeacons() {
         const dateTimeNow = Date.now()
         const params = {
-            TableName: table,
+            TableName: this.table,
             IndexName: "AllAvailableBeacons",
             KeyConditionExpression: "TypeName = :typename AND EndTime > :timeleft",
             ExpressionAttributeValues: {
@@ -31,7 +46,7 @@ module.exports = class BeaconDynamoDb {
     async getBeaconsByGame(gameName) {
         const dateTimeNow = Date.now()
         const params = {
-            TableName: table,
+            TableName: this.table,
             IndexName: "BeaconsByGameName",
             KeyConditionExpression: "GameName = :gamename AND EndTime > :timeleft",
             ExpressionAttributeValues: {
@@ -47,7 +62,7 @@ module.exports = class BeaconDynamoDb {
     async getBeaconsByUserId(userId) {
         const dateTimeNow = Date.now()
         const params = {
-            TableName: table,
+            TableName: this.table,
             IndexName: "BeaconsByUserId",
             KeyConditionExpression: "UserId = :userId AND EndTime > :timeleft",
             ExpressionAttributeValues: {
@@ -57,7 +72,7 @@ module.exports = class BeaconDynamoDb {
         };
 
         const data = await this.query(params);
-        return data.Items;
+        return data;
     }
 
     async stopBeaconsByUser(userId) {
@@ -67,7 +82,7 @@ module.exports = class BeaconDynamoDb {
             const item = Object.assign({}, beacon)
             item.EndTime = this.endingTime(0)
             const params = {
-                TableName: table,
+                TableName: this.table,
                 Item: item
             };
             return this.put(params);
@@ -77,51 +92,14 @@ module.exports = class BeaconDynamoDb {
         return response;
     }
 
-    async query(params) {
-        return docClient.query(params).promise()
-    }
-
-    async put(params) {
-        return docClient.put(params).promise();
-    }
-
-    startingTime(beacons, gameName, platformName, id) {
-        const existingStartTime = beacons.find(beacon => {
-            const [userId, name, platform, startTime] = beacon.UniqueId.split("-");
-            const existingPrefix = `${userId}-${name}-${platform}`;
-            const prefix = `${id}-${gameName}-${platformName}`;
-            if (prefix === existingPrefix) {
-                return true;
-            } else {
-                return false;
-            }
-        });
-
-        if (existingStartTime) {
-            const [userId, name, platform, startTime] = existingStartTime.UniqueId.split("-");
-            console.log(startTime);
-            return parseInt(startTime);
-        } else {
-            const newtime = Date.now();
-            console.log(newtime);
-            return newtime;
-        }
-    }
-
-    endingTime(minutesAvailable) {
-        const time = Date.now();
-        const endTime = time + (minutesAvailable * 60000);
-        return endTime;
-    }
-
     async sendBeacon(userId, username, gameName, platformName, minutesAvailable) {
         const waitingBeacons = this.getBeaconsByGame(gameName)
-        const beacons = await this.getBeaconsByUserId(userId);
-        const startTime = this.startingTime(beacons, gameName, platformName, userId);
+        const data = await this.getBeaconsByUserId(userId);
+        const startTime = this.startingTime(data, gameName, platformName, userId);
         const endTime = this.endingTime(minutesAvailable)
 
         const params = {
-            TableName: table,
+            TableName: this.table,
             Item: {
                 "UniqueId": `${userId}-${gameName}-${platformName}-${startTime}`,
                 "TypeName": "Beacon",
@@ -135,8 +113,30 @@ module.exports = class BeaconDynamoDb {
             }
         };
 
-        const deleted = await this.put(params);
-        console.log(deleted);
+        const response = await this.put(params);
+        // Azure/Sql version returned which players were waiting for the same game.
+        // To duplicate this functionality, this function returns the results of a
+        // this.getBeaconsByGame call
         return await waitingBeacons;
+    }
+
+    startingTime(beacons, gameName, platformName, userId) {
+        const existingStartTime = beacons.Items.find(beacon =>
+                beacon.GameName === gameName
+                && beacon.PlatformName === platformName
+                && beacon.UserId === userId
+        )
+
+        if (existingStartTime) {
+            return parseInt(existingStartTime.StartTime)
+        } else {
+            return Date.now()
+        }
+    }
+
+    endingTime(minutesAvailable) {
+        const time = Date.now();
+        const endTime = time + (minutesAvailable * 60000);
+        return endTime;
     }
 }
