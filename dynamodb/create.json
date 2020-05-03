@@ -200,6 +200,7 @@
           "Username",
           "GameName",
           "PlatformName",
+          "GamePlatformCombination",
           "StartTime",
           "EndTime"
         ]
