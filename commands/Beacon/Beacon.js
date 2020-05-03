@@ -49,8 +49,8 @@ module.exports = class Beacon {
         return result.rowsAffected.every(value => value > 0);
     }
 
-    messageList(listType, result) {
-        if (result.rowsAffected.every(value => value === 0)) {
+    messageList(listType, data) {
+        if (data.Count === 0) {
             return `No one is waiting for ${listType.toUpperCase()}, yet!\nDon't forget to add yourself to the waiting list. Check out **!helpme games**`;
         }
 
@@ -58,7 +58,7 @@ module.exports = class Beacon {
         let list = `WP Looking For Games\n${title} Beacons\n\n`;
         const date = new Date();
 
-        result.recordset.map((beacon, index) => {
+        data.Items.map((beacon, index) => {
             const { Username, GameName, PlatformName, EndTime } = beacon;
             const platform = PlatformName === 'pc'? '' : `\t(${PlatformName.toUpperCase()})`;
             const available = (EndTime - date.getTime()) / 60000;
