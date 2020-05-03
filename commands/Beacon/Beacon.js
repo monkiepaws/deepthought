@@ -1,11 +1,11 @@
 // This class is the middle man between the bot and the data
 // access layer (in this case, BeaconDb)
-const BeaconDb = require('./db/BeaconDb.js');
+const BeaconDynamoDb = require('./db/BeaconDynamoDb');
 const allGames = 'all games';
 
 module.exports = class Beacon {
     constructor() {
-        this._db = new BeaconDb();
+        this._db = new BeaconDynamoDb();
     }
 
     async getList() {
