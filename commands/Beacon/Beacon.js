@@ -50,7 +50,7 @@ module.exports = class Beacon {
     }
 
     messageList(listType, data) {
-        if (data.Count === 0) {
+        if (!data.Count || data.Count === 0) {
             return `No one is waiting for ${listType.toUpperCase()}, yet!\nDon't forget to add yourself to the waiting list. Check out **!helpme games**`;
         }
 

@@ -216,11 +216,6 @@
     "ReadCapacityUnits": 1,
     "WriteCapacityUnits": 1
   },
-  "SSESpecification": {
-    "Enabled": true,
-    "SSEType": "AES256",
-    "KMSMasterKeyId": ""
-  },
   "Tags": [
     {
       "Key": "Customer",
