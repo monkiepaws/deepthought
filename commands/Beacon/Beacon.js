@@ -46,7 +46,7 @@ module.exports = class Beacon {
         } catch(err) {
             console.log(err);
         }
-        return result.rowsAffected.every(value => value > 0);
+        return result;
     }
 
     messageList(listType, data) {

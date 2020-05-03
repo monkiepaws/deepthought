@@ -91,8 +91,8 @@ module.exports = {
 
     removeFromList(message) {
         return beacon.removeFromListByID(message.author.id.toString())
-            .then(success => {
-                if (success) {
+            .then(data => {
+                if (data.Count > 0) {
                     const text = `${message.author} stopped waiting: **gl;hf!** 🎉`;
                     return message.channel.send(embeddedMessage(text));
                 } else {
@@ -121,15 +121,15 @@ function addToList(newBeacon, message) {
         .catch(err => console.log(err));
 }
 
-function messageOnAddBeacon(newBeacon, result, message) {
-    if (result.rowsAffected.find(value => value > 0)) {
+function messageOnAddBeacon(newBeacon, data, message) {
+    if (data.Count > 0) {
         const game = newBeacon.gameName;
         const platformName = newBeacon.platformName;
         const platform = platformName === 'pc' ? '' : platformName.toUpperCase();
         const gameMessage = games.get(game).message;
         let mentions = '';
         let text = '';
-        result.recordset.map(currentBeacon => {
+        data.Items.map(currentBeacon => {
             if (currentBeacon.UserId !== message.author.id && currentBeacon.PlatformName === platformName) {
                 mentions += `<@${currentBeacon.UserId}>\t`;
             }
