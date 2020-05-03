@@ -52,7 +52,7 @@ module.exports = class BeaconDynamoDb {
             KeyConditionExpression: "GameName = :gamename AND EndTime > :timeleft",
             ExpressionAttributeValues: {
                 ":gamename": gameName,
-                ":timeleft": 2
+                ":timeleft": dateTimeNow
             }
         };
 
@@ -91,7 +91,7 @@ module.exports = class BeaconDynamoDb {
     async stopBeaconsByUser(userId) {
         const beacons = await this.getBeaconsByUserId(userId);
 
-        const promises = beacons.map(beacon => {
+        const promises = beacons.Items.map(beacon => {
             const item = Object.assign({}, beacon)
             item.EndTime = this.endingTime(0)
             const params = {
@@ -102,6 +102,7 @@ module.exports = class BeaconDynamoDb {
         });
 
         const response = await Promise.all(promises);
+        response.forEach(r => console.log(r))
         return response;
     }
 
@@ -113,7 +114,7 @@ module.exports = class BeaconDynamoDb {
             KeyConditionExpression: "UserId = :userId AND EndTime > :timeleft",
             ExpressionAttributeValues: {
                 ":userId": userId,
-                ":timeleft": 2
+                ":timeleft": dateTimeNow
             }
         };
 

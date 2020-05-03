@@ -91,8 +91,8 @@ module.exports = {
 
     removeFromList(message) {
         return beacon.removeFromListByID(message.author.id.toString())
-            .then(data => {
-                if (data.Count > 0) {
+            .then(responses => {
+                if (responses.every(data => data)) {
                     const text = `${message.author} stopped waiting: **gl;hf!** 🎉`;
                     return message.channel.send(embeddedMessage(text));
                 } else {
@@ -122,7 +122,7 @@ function addToList(newBeacon, message) {
 }
 
 function messageOnAddBeacon(newBeacon, data, message) {
-    if (data.Count > 0) {
+    if (data) {
         const game = newBeacon.gameName;
         const platformName = newBeacon.platformName;
         const platform = platformName === 'pc' ? '' : platformName.toUpperCase();
