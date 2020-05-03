@@ -1,8 +1,9 @@
 const AWS = require("aws-sdk");
+const secrets = require("./secrets");
 
 AWS.config.update({
-    region: "ap-southeast-2",
-    endpoint: "http://localhost:8000"
+    region: secrets.region,
+    endpoint: secrets.endpoint
 });
 
 module.exports = class BeaconDynamoDb {
