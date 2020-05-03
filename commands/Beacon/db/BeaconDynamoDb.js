@@ -60,39 +60,6 @@ module.exports = class BeaconDynamoDb {
         return data;
     }
 
-    async getBeaconsByUserId(userId) {
-        const dateTimeNow = Date.now()
-        const params = {
-            TableName: this.table,
-            IndexName: "BeaconsByUserId",
-            KeyConditionExpression: "UserId = :userId AND EndTime > :timeleft",
-            ExpressionAttributeValues: {
-                ":userId": userId,
-                ":timeleft": 2
-            }
-        };
-
-        const data = await this.query(params);
-        return data;
-    }
-
-    async stopBeaconsByUser(userId) {
-        const beacons = await this.getBeaconsByUserId(userId);
-
-        const promises = beacons.map(beacon => {
-            const item = Object.assign({}, beacon)
-            item.EndTime = this.endingTime(0)
-            const params = {
-                TableName: this.table,
-                Item: item
-            };
-            return this.put(params);
-        });
-
-        const response = await Promise.all(promises);
-        return response;
-    }
-
     async sendBeacon(userId, username, gameName, platformName, minutesAvailable) {
         const waitingBeacons = this.getBeaconsByGame(gameName)
         const data = await this.getBeaconsByUserId(userId);
@@ -119,6 +86,39 @@ module.exports = class BeaconDynamoDb {
         // To duplicate this functionality, this function returns the results of a
         // this.getBeaconsByGame call
         return await waitingBeacons;
+    }
+
+    async stopBeaconsByUser(userId) {
+        const beacons = await this.getBeaconsByUserId(userId);
+
+        const promises = beacons.map(beacon => {
+            const item = Object.assign({}, beacon)
+            item.EndTime = this.endingTime(0)
+            const params = {
+                TableName: this.table,
+                Item: item
+            };
+            return this.put(params);
+        });
+
+        const response = await Promise.all(promises);
+        return response;
+    }
+
+    async getBeaconsByUserId(userId) {
+        const dateTimeNow = Date.now()
+        const params = {
+            TableName: this.table,
+            IndexName: "BeaconsByUserId",
+            KeyConditionExpression: "UserId = :userId AND EndTime > :timeleft",
+            ExpressionAttributeValues: {
+                ":userId": userId,
+                ":timeleft": 2
+            }
+        };
+
+        const data = await this.query(params);
+        return data;
     }
 
     startingTime(beacons, gameName, platformName, userId) {
