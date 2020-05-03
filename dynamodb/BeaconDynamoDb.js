@@ -24,7 +24,7 @@ module.exports = class BeaconDynamoDb {
             }
         };
 
-        const data = await docClient.query(params).promise();
+        const data = await this.query(params);
         return data;
     }
 
@@ -40,7 +40,7 @@ module.exports = class BeaconDynamoDb {
             }
         };
 
-        const data = await docClient.query(params).promise();
+        const data = await this.query(params);
         return data;
     }
 
@@ -56,7 +56,7 @@ module.exports = class BeaconDynamoDb {
             }
         };
 
-        const data = await docClient.query(params).promise();
+        const data = await this.query(params);
         return data.Items;
     }
 
@@ -64,18 +64,25 @@ module.exports = class BeaconDynamoDb {
         const beacons = await this.getBeaconsByUserId(userId);
 
         const promises = beacons.map(beacon => {
+            const item = Object.assign({}, beacon)
+            item.EndTime = this.endingTime(0)
             const params = {
                 TableName: table,
-                Key: {
-                    "UniqueId": beacon.UniqueId,
-                    "StartTime": beacon.StartTime
-                }
+                Item: item
             };
-            return docClient.delete(params).promise();
+            return this.put(params);
         });
 
         const response = await Promise.all(promises);
         return response;
+    }
+
+    async query(params) {
+        return docClient.query(params).promise()
+    }
+
+    async put(params) {
+        return docClient.put(params).promise();
     }
 
     startingTime(beacons, gameName, platformName, id) {
@@ -128,7 +135,7 @@ module.exports = class BeaconDynamoDb {
             }
         };
 
-        const deleted = await docClient.put(params).promise();
+        const deleted = await this.put(params);
         console.log(deleted);
         return await waitingBeacons;
     }
