@@ -9,7 +9,7 @@ AWS.config.update({
 module.exports = class BeaconDynamoDb {
     constructor() {
         this._docClient = new AWS.DynamoDB.DocumentClient()
-        this._table = "WP_Beacons"
+        this._table = secrets.table
     }
 
     get docClient() {
