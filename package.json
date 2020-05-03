@@ -1,5 +1,5 @@
 {
-  "name": "deepthought",
+  "name": "polybot",
   "version": "1.0.0",
   "description": "A Discord bot test",
   "main": "index.js",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/monkiepaws/deepthought.git"
+    "url": "git+https://github.com/monkiepaws/polybot.git"
   },
   "keywords": [],
   "author": "",
