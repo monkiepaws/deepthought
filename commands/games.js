@@ -134,10 +134,10 @@ function messageOnAddBeacon(newBeacon, data, message) {
                 mentions += `<@${currentBeacon.UserId}>\t`;
             }
         });
-        mentions += `**${gameMessage}**`;
-        message.channel.send(mentions);
         text += `\n${message.author} added you to the ${game.toUpperCase()} ${platform} waiting list!`;
-        return message.channel.send(embeddedMessage(text));
+        message.channel.send(embeddedMessage(text))
+        mentions += `**${gameMessage}**`;
+        return message.channel.send(mentions);
     } else {
         return message.channel.send(`${message.author}, something went wrong and you weren't added to a waiting list!`);
     }
