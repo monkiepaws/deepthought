@@ -78,9 +78,16 @@ module.exports = {
             games.get(game).defaultPlatform;
 
         // Everything seems OK, ready to add user's beacon to the waiting list
+        let username;
+        try {
+            username = message.member.displayName
+        } catch (ex) {
+            console.error(ex);
+            username = message.author.username
+        }
         const newBeacon = {
             userId: message.author.id,
-            username: message.member.displayName || message.member.name,
+            username: username,
             gameName: game,
             platformName: platform,
             minutesAvailable: minutesAvailable,
