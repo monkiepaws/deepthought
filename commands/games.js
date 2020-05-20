@@ -80,7 +80,7 @@ module.exports = {
         // Everything seems OK, ready to add user's beacon to the waiting list
         const newBeacon = {
             userId: message.author.id,
-            username: message.member.displayName,
+            username: message.member.displayName || message.member.name,
             gameName: game,
             platformName: platform,
             minutesAvailable: minutesAvailable,
