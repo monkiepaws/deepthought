@@ -78,16 +78,9 @@ module.exports = {
             games.get(game).defaultPlatform;
 
         // Everything seems OK, ready to add user's beacon to the waiting list
-        let username;
-        try {
-            username = message.member.displayName
-        } catch (ex) {
-            console.error(ex);
-            username = message.author.username
-        }
         const newBeacon = {
             userId: message.author.id,
-            username: username,
+            username: getUsername(message),
             gameName: game,
             platformName: platform,
             minutesAvailable: minutesAvailable,
@@ -147,6 +140,14 @@ function messageOnAddBeacon(newBeacon, data, message) {
         return message.channel.send(mentions);
     } else {
         return message.channel.send(`${message.author}, something went wrong and you weren't added to a waiting list!`);
+    }
+}
+
+function getUsername(message) {
+    if (message.member) {
+        return message.member.displayName
+    } else {
+        return message.author.username
     }
 }
 
