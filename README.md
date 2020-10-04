@@ -23,6 +23,7 @@ Command | Title | Platforms
 **BBXTAG** | BlazBlue x Tag Battle | `PS4, PC, SWITCH`
 **DBZ** | Dragonball FighterZ | `PS4, PC, XBOX, SWITCH`
 **FC** | Fightcade | `PC`
+**FEXL** | Fighting EX Layer | `PC, PS4`
 **GG** | Guilty Gear Xrd: Rev2 | `PS4, PC`
 **KOF98** | KoF98 (UM) | `FC, PC`
 **KOF2002** | KoF2002 (UM)| `FC, PC`

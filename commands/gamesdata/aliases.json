@@ -197,6 +197,9 @@
     },
     "samsho": {
       "game": "samsho"
+    },
+    "fexl": {
+      "game": "fexl"
     }
   }
 }
