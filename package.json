@@ -20,6 +20,6 @@
   "homepage": "https://github.com/monkiepaws/polybot#readme",
   "dependencies": {
     "aws-sdk": "^2.668.0",
-    "discord.js": "^11.4.2"
+    "discord.js": "^11.6.4"
   }
 }
