@@ -10,7 +10,13 @@ const bannedPermissions = [
     'MANAGE_NICKNAMES',
     'MANAGE_ROLES',
     'MANAGE_WEBHOOKS',
-    'MANAGE_EMOJIS'
+    'MANAGE_EMOJIS',
+    'VIEW_AUDIT_LOG',
+    'SEND_TTS_MESSAGES',
+    'MOVE_MEMBERS',
+    'MUTE_MEMBERS',
+    'DEAFEN_MEMBERS',
+    'PRIORITY_SPEAKER'
 ];
 
 module.exports = {
